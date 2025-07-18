@@ -62,7 +62,7 @@ class Listing(models.Model):
     description = models.TextField(help_text='Description of listing')
     location = models.CharField(max_length=100, help_text='Location of listing')
     price = models.DecimalField(decimal_places=2, max_digits=10, help_text='Price of listing')
-    type = models.CharField(max_length=100, help_text='Type of listing')
+    type = models.CharField(max_length=20, choices=Type.choices, help_text='Type of listing')
 
     host = models.ForeignKey(
         User,
