@@ -50,7 +50,7 @@ class Listing(models.Model):
         APARTMENT = 'APARTMENT', 'Apartment'
         ROOM = 'ROOM', 'Room'
         TOUR = 'TOUR', 'Tour'
-        Car = 'CAR', 'Car'
+        CAR = 'CAR', 'Car'
 
     id = models.UUIDField(
         primary_key=True,
