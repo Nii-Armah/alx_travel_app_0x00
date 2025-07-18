@@ -67,6 +67,8 @@ class Listing(models.Model):
     location = models.CharField(max_length=100, help_text='Location of listing')
     price = models.DecimalField(decimal_places=2, max_digits=10, help_text='Price of listing')
     type = models.CharField(max_length=20, choices=Type.choices, help_text='Type of listing')
+    created_at = models.DateTimeField(auto_now_add=True, help_text='Date and time of listing creation')
+    updated_at = models.DateTimeField(auto_now=True, help_text='Date and time of last update of listing')
 
     host = models.ForeignKey(
         User,
@@ -74,3 +76,6 @@ class Listing(models.Model):
         related_name='listings',
         help_text='Host of listing'
     )
+
+    def __str__(self) -> str:
+        return self.title
