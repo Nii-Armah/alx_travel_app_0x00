@@ -6,6 +6,9 @@ User:
 
 Listing:
     A bookable travel-related item or service.
+
+Booking:
+    A guest reservation for a listing.
 """
 
 from django.contrib.auth.models import AbstractUser
@@ -69,13 +72,45 @@ class Listing(models.Model):
     type = models.CharField(max_length=20, choices=Type.choices, help_text='Type of listing')
     created_at = models.DateTimeField(auto_now_add=True, help_text='Date and time of listing creation')
     updated_at = models.DateTimeField(auto_now=True, help_text='Date and time of last update of listing')
-
-    host = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='listings',
-        help_text='Host of listing'
-    )
+    host = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listings', help_text='Host of listing')
 
     def __str__(self) -> str:
         return self.title
+
+
+class Booking(models.Model):
+    """A guest reservation for a listing."""
+    class Meta:
+        db_table = 'bookings'
+
+    class Status(models.TextChoices):
+        """Status of guest reservations."""
+        PENDING = 'PENDING', 'Pending'
+        CONFIRMED = 'CONFIRMED', 'Confirmed'
+
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False,
+        help_text='Unique identification of booking'
+    )
+
+    listing = models.ForeignKey(
+        Listing,
+        on_delete=models.CASCADE,
+        related_name='bookings',
+        help_text='Listing that has been booked'
+    )
+
+    guest = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='bookings',
+        help_text='Guest that is booked the listing'
+    )
+
+    total_price = models.DecimalField(decimal_places=2, max_digits=10, help_text='Total price of listing')
+    check_in = models.DateField(help_text='Check in date of guest')
+    check_out = models.DateField(help_text='Check out date of guest')
+    created_at = models.DateTimeField(auto_now_add=True, help_text='Date and time of booking creation')
+    updated_at = models.DateTimeField(auto_now=True, help_text='Date and time of last update of booking')
