@@ -9,6 +9,9 @@ Listing:
 
 Booking:
     A guest reservation for a listing.
+
+Review:
+    A guest feedback about a listing.
 """
 
 from django.contrib.auth.models import AbstractUser
@@ -114,3 +117,34 @@ class Booking(models.Model):
     check_out = models.DateField(help_text='Check out date of guest')
     created_at = models.DateTimeField(auto_now_add=True, help_text='Date and time of booking creation')
     updated_at = models.DateTimeField(auto_now=True, help_text='Date and time of last update of booking')
+
+
+class Review(models.Model):
+    """A guest feedback about a listing."""
+    class Meta:
+        db_table = 'reviews'
+
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False,
+        help_text='Unique identification of review'
+    )
+
+    listing = models.ForeignKey(
+        Listing,
+        on_delete=models.CASCADE,
+        related_name='reviews',
+        help_text='Listing being reviewed'
+    )
+
+    guest = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='reviews',
+        help_text='Guest giving review'
+    )
+
+    rating = models.IntegerField(help_text='Rating of review between 1 and 5')
+    comment = models.TextField(blank=True, help_text='Review comment')
+    created_at = models.DateTimeField(auto_now_add=True, help_text='Date and time of review creation')

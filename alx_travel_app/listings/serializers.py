@@ -7,11 +7,14 @@ BookingSerializer:
 ListingSerializer:
     Processes and validates Listing model data.
 
+ReviewSerializer:
+    Processes and validates Review model data.
+
 UserSerializer:
     Processes and validates User model data.
 """
 
-from alx_travel_app.listings.models import Booking, Listing, User
+from alx_travel_app.listings.models import Booking, Listing, Review, User
 
 from rest_framework import serializers
 
@@ -27,6 +30,13 @@ class ListingSerializer(serializers.ModelSerializer):
     """Processes and validates Listing model data."""
     class Meta:
         model = Listing
+        fields = '__all__'
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    """Processes and validates Review model data."""
+    class Meta:
+        model = Review
         fields = '__all__'
 
 
