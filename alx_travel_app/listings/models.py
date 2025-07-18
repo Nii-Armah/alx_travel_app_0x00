@@ -118,6 +118,13 @@ class Booking(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, help_text='Date and time of booking creation')
     updated_at = models.DateTimeField(auto_now=True, help_text='Date and time of last update of booking')
 
+    status = models.CharField(
+        max_length=20,
+        choices=Status.choices,
+        default=Status.PENDING,
+        help_text='Status of booking'
+    )
+
 
 class Review(models.Model):
     """A guest feedback about a listing."""
