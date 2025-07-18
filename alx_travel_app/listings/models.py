@@ -22,7 +22,7 @@ class User(AbstractUser):
     class Role(models.TextChoices):
         """Roles of users."""
         HOST = 'HOST', 'Host'
-        GUEST = 'GUEST', 'GUEST'
+        GUEST = 'GUEST', 'Guest'
 
 
     id = models.UUIDField(
