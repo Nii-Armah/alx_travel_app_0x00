@@ -39,6 +39,9 @@ class User(AbstractUser):
         help_text='Type of user'
     )
 
+    def __str__(self) -> str:
+        return self.username
+
 
 class Listing(models.Model):
     """A bookable travel-related item or service."""
